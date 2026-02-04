@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: #212121; color:white; font-family: Arial;">
+
+    <button id="showCard">Show Card</button>
+
+    <div id="card"></div>
+
+</body>
+
+<script>
+    const requestUrl = 'https://api.github.com/users/PriteshMantri03'
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', requestUrl)
+
+    xhr.onreadystatechange = function(){
+        console.log(xhr.readyState);
+
+        if(xhr.readyState === 4){
+            const data = JSON.parse(this.responseText)
+
+            document.getElementById('showCard').addEventListener('click', function(){
+
+                document.getElementById('card').innerHTML = `
+                    <div style="
+                        margin-top:20px;
+                        background:#333;
+                        padding:20px;
+                        width:250px;
+                        border-radius:10px;
+                        text-align:center;
+                    ">
+                        <img src="${data.avatar_url}" width="100" style="border-radius:50%">
+                        <h3>${data.login}</h3>
+                        <p>Followers: ${data.followers}</p>
+                        <a href="${data.html_url}" target="_blank" style="color:cyan">Follow Account</a>
+                    </div>
+                `
+            })
+        }
+    }
+    xhr.send();
+</script>
+</html>
